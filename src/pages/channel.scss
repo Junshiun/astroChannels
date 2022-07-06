@@ -1,0 +1,28 @@
+.channelPageWrap {
+  .channelMainInfo {
+    display: flex;
+    margin-bottom: 1rem;
+
+    .imageWrap {
+      width: 4.5rem;
+      height: 2.5rem;
+      margin-right: 1rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .channelName {
+      span {
+        display: block;
+
+        &:last-child {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
