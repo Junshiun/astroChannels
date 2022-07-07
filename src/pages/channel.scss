@@ -25,4 +25,36 @@
       }
     }
   }
+
+  .channelDescription {
+    margin-bottom: 2rem;
+  }
+
+  .channelDaysBar {
+    display: flex;
+    margin-bottom: 1rem;
+
+    div {
+      cursor: pointer;
+      margin-right: 1rem;
+
+      &.active {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .channelSchedule {
+    color: var(--grey-01);
+
+    div {
+      display: grid;
+      grid-template-columns: 6rem auto;
+      margin-bottom: 0.5rem;
+
+      &.onNow {
+        color: var(--black-01);
+      }
+    }
+  }
 }
