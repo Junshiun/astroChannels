@@ -1,62 +1,83 @@
-import { useEffect, useState } from "react";
-import { ChannelBox } from "../components/channelBox";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { ChannelBox } from "../components/channels/channelBox";
+import { Header } from "../components/channels/header";
+import { ChannelState } from "../context/context";
+import { SEARCH_FILTER } from "../context/reducer";
 import "./channels.scss";
 
+const Params = createContext();
+
 export const Channels = () => {
-  const [initialData, setInitialData] = useState(null);
-  const [filteredData, setFilteredData] = useState(null);
+  const {
+    channels: { filtered },
+  } = ChannelState();
+
+  const { dispatchChannels, loading } = ChannelState();
+  const [params, setParams] = useSearchParams();
+  const [reload, setReload] = useState(true);
+
+  // useEffect(() => {
+  //   if (filtered) {
+  //     let array = new Set([]);
+
+  //     filtered.map((element) => {
+  //       array.add(element.isHd);
+  //       return null;
+  //     });
+
+  //     console.log(array);
+  //   }
+  // }, [filtered]);
 
   useEffect(() => {
-    fetch("https://contenthub-api.eco.astro.com.my/channel/all.json")
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        setInitialData(res.response);
-        setFilteredData(res.response);
+    if (!loading) {
+      const searchParams = params.get("search");
+      const categoriesParams = params.get("categories");
+      const languagesParams = params.get("languages");
+      const hdParams = params.get("isHd");
+
+      dispatchChannels({
+        type: SEARCH_FILTER,
+        search: searchParams,
+        categories: categoriesParams,
+        languages: languagesParams,
+        isHd: hdParams,
       });
-  }, []);
-
-  const sortByChannelNum = () => {
-    const newSort = filteredData.sort((a, b) => a.stbNumber - b.stbNumber);
-    setFilteredData([...newSort]);
-  };
-
-  const sortByChannalName = () => {
-    const newSort = filteredData.sort((a, b) => a.title.localeCompare(b.title));
-    setFilteredData([...newSort]);
-  };
-
-  const searchName = (e) => {
-    if (e.target.value === "") {
-      setFilteredData(initialData);
-      return;
     }
+  }, [reload]);
 
-    const newSort = initialData.filter(
-      (channel) =>
-        channel.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        channel.stbNumber.includes(e.target.value)
-    );
-    setFilteredData([...newSort]);
-  };
+  useEffect(() => {
+    if (!loading) setReload(!reload);
+  }, [loading, params]);
 
   return (
     <div className="wrapper">
-      <input onChange={(e) => searchName(e)} placeholder="search"></input>
-      <button onClick={sortByChannelNum}>sort by channel number</button>
-      <button onClick={sortByChannalName}>sort by channel name</button>
-      <div className="channelsWrap">
-        {filteredData
-          ? filteredData.map((element, index) => {
-              return (
-                <ChannelBox
-                  details={element}
-                  key={"channel-" + index}
-                ></ChannelBox>
-              );
-            })
-          : null}
-      </div>
+      <ParamsContext params={params} setParams={setParams}>
+        <Header></Header>
+        <div className="channelsWrap">
+          {filtered
+            ? filtered.map((element, index) => {
+                return (
+                  <ChannelBox
+                    details={element}
+                    key={"channel-" + element.title + "-" + index}
+                  ></ChannelBox>
+                );
+              })
+            : null}
+        </div>
+      </ParamsContext>
     </div>
   );
+};
+
+const ParamsContext = ({ children, params, setParams }) => {
+  return (
+    <Params.Provider value={{ params, setParams }}>{children}</Params.Provider>
+  );
+};
+
+export const ParamsState = () => {
+  return useContext(Params);
 };
