@@ -1,5 +1,9 @@
 * {
   box-sizing: border-box;
+  --black-01: #333;
+  --grey-01: #888;
+  --purple-01: rgb(230, 0, 125);
+  --header-height: 5rem;
 }
 
 .App {
