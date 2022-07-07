@@ -1,0 +1,46 @@
+.filterWrap {
+  display: flex;
+  align-items: center;
+
+  .filterTitle {
+    color: var(--grey-01);
+    margin-right: 0.5rem;
+  }
+
+  .checkboxWrap {
+    display: flex;
+    align-items: center;
+
+    .categoryName {
+      margin-right: 0.5rem;
+      color: var(--grey-01);
+    }
+
+    .checkBox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      width: 0.7rem;
+      height: 0.7rem;
+      background-color: white;
+      margin-right: 0.2rem;
+      cursor: pointer;
+
+      .icon {
+        height: 100%;
+        width: 100%;
+        color: var(--purple-01);
+      }
+    }
+  }
+
+  .apply {
+    background-color: var(--purple-01);
+    color: white;
+    padding: 0.3rem 0.5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+}

@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./channelBox.scss";
 
 const SCHEDULETOTAL = 5;
 const SCHEDULENUMBER = 3;
 
 export const ChannelBox = ({
-  details: { stbNumber, title, imageUrl, currentSchedule },
+  details: { stbNumber, title, imageUrl, currentSchedule, detailUrl },
 }) => {
   const [image, setImage] = useState(null);
   const [schedule, setSchedule] = useState(
     Array(5).fill({ time: "N/A", name: "No Information Available" })
   );
 
-  const programBox = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let array = [];
@@ -38,10 +39,10 @@ export const ChannelBox = ({
 
     setSchedule(array);
     setImage(imageUrl);
-  }, [title]);
+  }, [currentSchedule, imageUrl]);
 
   return (
-    <a className="channelBox">
+    <div className="channelBox" onClick={() => navigate(detailUrl)}>
       <div className="channelImg">
         <img
           src={image}
@@ -67,7 +68,7 @@ export const ChannelBox = ({
               );
             })}
           </div>
-          <div className="channelProgramme" ref={programBox}>
+          <div className="channelProgramme">
             {schedule.map((element, index) => {
               if (index >= SCHEDULENUMBER) return null;
               return (
@@ -79,6 +80,6 @@ export const ChannelBox = ({
           </div>
         </>
       ) : null}
-    </a>
+    </div>
   );
 };

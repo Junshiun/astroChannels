@@ -7,7 +7,8 @@
     "a b"
     "c d";
   padding: 1rem;
-  box-shadow: 0 0 5px #f3f6f4;
+  box-shadow: 0 0 5px #eeeeee;
+  cursor: pointer;
 
   .channelImg {
     grid-area: a;
@@ -53,9 +54,9 @@
   .channelTime,
   .channelProgramme {
     div {
-      color: #888;
+      color: var(--grey-01);
       &:first-child {
-        color: #333;
+        color: var(--black-01);
       }
     }
   }
