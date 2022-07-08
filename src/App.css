@@ -2,8 +2,10 @@
   box-sizing: border-box;
   --black-01: #333;
   --grey-01: #888;
+  --grey-02: #bcbcbc;
+  --grey-03: #eeeeee;
   --purple-01: rgb(230, 0, 125);
-  --header-height: 5rem;
+  --header-height: 5.5rem;
 }
 
 .App {
