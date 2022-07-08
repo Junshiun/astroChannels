@@ -1,0 +1,13 @@
+.topBarWrap {
+  margin-bottom: 2rem;
+
+  .upper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+  }
+
+  .lower {
+    justify-content: flex-end;
+  }
+}
