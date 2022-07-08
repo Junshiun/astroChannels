@@ -1,11 +1,11 @@
 .channelBox {
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: max-content 1fr auto;
   grid-column-gap: 1rem;
   grid-row-gap: 2rem;
   grid-template-areas:
-    "a b"
-    "c d";
+    "a b c"
+    "d e e";
   padding: 1rem;
   box-shadow: 0 0 5px #eeeeee;
   cursor: pointer;
@@ -34,12 +34,28 @@
     }
   }
 
-  .channelTime {
+  .favouritesWrap {
     grid-area: c;
+    color: var(--purple-01);
+    background-color: transparent;
+    border: none;
+    width: fit-content;
+    height: fit-content;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+
+    .unliked {
+      color: var(--grey-02);
+    }
+  }
+
+  .channelTime {
+    grid-area: d;
   }
 
   .channelProgramme {
-    grid-area: d;
+    grid-area: e;
     width: 100%;
     overflow: hidden;
 
