@@ -1,3 +1,5 @@
+import { FILTER_GROUPS } from "../components/channels/filter";
+
 export const FETCH_DATA = "fetch data";
 export const SORT_BYNUM_ASCENDING = "sort by number ascending";
 export const SORT_BYNUM_DESCENDING = "sort by number descending";
@@ -8,15 +10,24 @@ export const SEARCH = "search";
 export const SEARCH_FILTER = "search and filter";
 export const RESET = "reset";
 
+export const ADD_TO_FAVOURITES = "add to favourites";
+export const REMOVE_FROM_FAVOURITES = "remove from favourites";
+export const ONLY_FAVOURITES = "only show favourites channels";
+export const REVERT_TO_NORMAL = "when only favourites is not selected";
+
 export const channelsReducer = (state, action) => {
-  const { initial, filtered } = state;
+  const { initial, filtered, dataTemp, sortType, sortTemp } = state;
+
+  const { payload } = action;
+
+  let results;
 
   switch (action.type) {
     case FETCH_DATA:
       return {
         ...state,
-        initial: action.data,
-        filtered: action.data,
+        initial: payload.data,
+        filtered: payload.data,
       };
     case SORT_BYNUM_ASCENDING:
       return {
@@ -24,7 +35,6 @@ export const channelsReducer = (state, action) => {
         initial: initial.sort((a, b) => a.stbNumber - b.stbNumber),
         filtered: filtered.sort((a, b) => a.stbNumber - b.stbNumber),
         sortType: SORT_BYNUM_ASCENDING,
-        // searched: searched.sort((a, b) => a.stbNumber - b.stbNumber),
       };
     case SORT_BYNUM_DESCENDING:
       return {
@@ -32,7 +42,6 @@ export const channelsReducer = (state, action) => {
         initial: initial.sort((a, b) => b.stbNumber - a.stbNumber),
         filtered: filtered.sort((a, b) => b.stbNumber - a.stbNumber),
         sortType: SORT_BYNUM_DESCENDING,
-        // searched: searched.sort((a, b) => b.stbNumber - a.stbNumber),
       };
     case SORT_BYNAME_ASCENDING:
       return {
@@ -40,7 +49,6 @@ export const channelsReducer = (state, action) => {
         initial: initial.sort((a, b) => a.title.localeCompare(b.title)),
         filtered: filtered.sort((a, b) => a.title.localeCompare(b.title)),
         sortType: SORT_BYNAME_ASCENDING,
-        // searched: searched.sort((a, b) => a.title.localeCompare(b.title)),
       };
     case SORT_BYNAME_DESCENDING:
       return {
@@ -48,76 +56,47 @@ export const channelsReducer = (state, action) => {
         initial: initial.sort((a, b) => b.title.localeCompare(a.title)),
         filtered: filtered.sort((a, b) => b.title.localeCompare(a.title)),
         sortType: SORT_BYNAME_DESCENDING,
-        // searched: searched.sort((a, b) => b.title.localeCompare(a.title)),
       };
-    // case FILTER:
-    //   dataUsed = searching ? searched : initial;
-
-    //   return {
-    //     ...state,
-    //     filtered:
-    //       action.categories.length > 0
-    //         ? dataUsed.filter((channel) =>
-    //             action.categories.includes(channel.category)
-    //           )
-    //         : searched,
-    //     filtering: action.categories.length > 0 ? true : false,
-    //   };
-    // case SEARCH:
-    //   dataUsed = filtering ? filtered : initial;
-
-    //   const search = dataUsed.filter(
-    //     (channel) =>
-    //       channel.title.toLowerCase().includes(action.value) ||
-    //       channel.stbNumber.includes(action.value)
-    //   );
-
-    //   return {
-    //     ...state,
-    //     filtered: search,
-    //     searched: search,
-    //     searching: true,
-    //   };
     case SEARCH_FILTER:
-      const results = initial
+      results = initial
         .filter((channel) => {
           if (
-            action.search === null ||
-            action.search === "null" ||
-            action.search === ""
+            payload.search === null ||
+            payload.search === "null" ||
+            payload.search === ""
           ) {
             return true;
           }
           return (
-            channel.title.toLowerCase().includes(action.search) ||
-            channel.stbNumber.includes(action.search)
+            channel.title.toLowerCase().includes(payload.search) ||
+            channel.stbNumber.includes(payload.search)
           );
         })
         .filter((channel) => {
           if (
-            action.categories === null ||
-            action.categories === "null" ||
-            action.categories === ""
+            payload[FILTER_GROUPS[0].name] === null ||
+            payload[FILTER_GROUPS[0].name] === "null" ||
+            payload[FILTER_GROUPS[0].name] === ""
           ) {
             return true;
           }
-          return action.categories.includes(channel.category);
+          return payload[FILTER_GROUPS[0].name].includes(channel.category);
         })
         .filter((channel) => {
           if (
-            action.languages === null ||
-            action.languages === "null" ||
-            action.languages === ""
+            payload[FILTER_GROUPS[1].name] === null ||
+            payload[FILTER_GROUPS[1].name] === "null" ||
+            payload[FILTER_GROUPS[1].name] === ""
           ) {
             return true;
           }
-          return action.languages.includes(channel.language);
+          return payload[FILTER_GROUPS[1].name].includes(channel.language);
         })
         .filter((channel) => {
           if (
-            action.isHd === null ||
-            action.isHd === "null" ||
-            action.isHd === ""
+            payload[FILTER_GROUPS[2].name] === null ||
+            payload[FILTER_GROUPS[2].name] === "null" ||
+            payload[FILTER_GROUPS[2].name] === ""
           ) {
             return true;
           }
@@ -126,16 +105,46 @@ export const channelsReducer = (state, action) => {
       return {
         ...state,
         filtered: results,
-        // searched: results,
-        // searching: true,
+      };
+    case ONLY_FAVOURITES:
+      results = filtered.filter((channel) => {
+        return payload.user.favourites.some(
+          (element) => channel.id === element.id
+        );
+      });
+      return {
+        ...state,
+        filtered: results,
+        dataTemp: filtered,
+        sortTemp: sortType,
+      };
+    case REVERT_TO_NORMAL:
+      return {
+        ...state,
+        filtered: dataTemp,
+        sortType: sortTemp,
       };
     case RESET:
       return {
         ...state,
         filtered: initial,
-        // searched: initial,
-        // searching: false,
       };
+    default:
+      return state;
+  }
+};
+
+export const userReducer = (state, action) => {
+  const { favourites } = state;
+
+  const { payload } = action;
+
+  switch (action.type) {
+    case ADD_TO_FAVOURITES:
+      return { ...state, favourites: [...favourites, payload.channel] };
+    case REMOVE_FROM_FAVOURITES:
+      const remain = favourites.filter((channel) => channel.id !== payload.id);
+      return { ...state, favourites: remain };
     default:
       return state;
   }
