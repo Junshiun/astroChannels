@@ -1,9 +1,6 @@
-import { useState } from "react";
-import { ChannelState } from "../../context/context";
-import { FILTER, SEARCH_FILTER } from "../../context/reducer";
+import { useEffect, useRef, useState } from "react";
 import { ParamsState } from "../../pages/channels";
-import { GrRadialSelected } from "react-icons/gr";
-import { AiFillCheckCircle } from "react-icons/ai";
+import { FaFilter } from "react-icons/fa";
 import "./filter.scss";
 
 const CATEGORIES = [
@@ -30,33 +27,54 @@ const LANGUAGE = [
 
 const RESOLUTION = ["HD"];
 
-const GROUPS = [CATEGORIES, LANGUAGE, RESOLUTION];
-
-const GROUPNAME = ["categories", "languages", "isHd"];
+export const FILTER_GROUPS = [
+  { name: "categories", value: CATEGORIES },
+  { name: "languages", value: LANGUAGE },
+  { name: "resolution", value: RESOLUTION },
+];
 
 export const Filter = () => {
   const [checkedFilter, setCheckedFilter] = useState({
-    categories: [],
-    languages: [],
-    isHd: [],
+    [FILTER_GROUPS[0].name]: [],
+    [FILTER_GROUPS[1].name]: [],
+    [FILTER_GROUPS[2].name]: [],
   });
-
-  const { dispatchChannels } = ChannelState();
 
   const { params, setParams } = ParamsState();
 
-  //   const handleCategories = (e) => {
-  //     let array = checkedCategories;
+  const [showFilter, setShowFilter] = useState(false);
+  const [filterReset, setFilterReset] = useState(0);
 
-  //     if (e.target.checked) setCheckedCategories([...array, e.target.value]);
-  //     else {
-  //       const exist = checkedCategories.indexOf(e.target.value);
-  //       if (exist > -1) {
-  //         array.splice(exist, 1);
-  //         setCheckedCategories(array);
-  //       }
-  //     }
-  //   };
+  const filterRef = useRef(null);
+  useEffect(() => {
+    setCheckedFilter({
+      [FILTER_GROUPS[0].name]: (params.get(FILTER_GROUPS[0].name) || "").split(
+        ","
+      ),
+      [FILTER_GROUPS[1].name]: (params.get(FILTER_GROUPS[1].name) || "").split(
+        ","
+      ),
+      [FILTER_GROUPS[2].name]: (params.get(FILTER_GROUPS[2].name) || "").split(
+        ","
+      ),
+    });
+  }, [params]);
+
+  const clickListener = (e) => {
+    console.log(filterRef.current.contains(e.target));
+    if (!filterRef.current.contains(e.target) && showFilter) {
+      setShowFilter(false);
+    }
+  };
+  useEffect(() => {
+    if (showFilter) {
+      window.addEventListener("click", clickListener);
+
+      return () => {
+        window.removeEventListener("click", clickListener);
+      };
+    }
+  }, [showFilter]);
 
   const handleCheckBox = (checked, value, group) => {
     let array = checkedFilter;
@@ -64,8 +82,7 @@ export const Filter = () => {
     if (checked) {
       array[group].push(value);
       setCheckedFilter(array);
-    } //array[group].push(value)
-    else {
+    } else {
       const exist = array[group].indexOf(value);
       if (exist > -1) {
         array[group].splice(exist, 1);
@@ -74,53 +91,104 @@ export const Filter = () => {
     }
   };
 
-  const applyFilter = () => {
-    console.log(checkedFilter);
-
-    setParams({
-      search: params.get("search"),
-      categories: checkedFilter.categories.join(","),
-      languages: checkedFilter.languages.join(","),
-      isHd: checkedFilter.isHd.join(","),
-    });
-    // dispatchChannels({ type: SEARCH_FILTER, categories: checkedCategories });
+  const applyFilter = (reset) => {
+    if (reset) {
+      setFilterReset(true);
+      setCheckedFilter({
+        [FILTER_GROUPS[0].name]: [],
+        [FILTER_GROUPS[1].name]: [],
+        [FILTER_GROUPS[2].name]: [],
+      });
+      setParams({
+        search: params.get("search"),
+      });
+    } else {
+      setParams({
+        search: params.get("search"),
+        [FILTER_GROUPS[0].name]: checkedFilter[FILTER_GROUPS[0].name].join(","),
+        [FILTER_GROUPS[1].name]: checkedFilter[FILTER_GROUPS[1].name].join(","),
+        [FILTER_GROUPS[2].name]: checkedFilter[FILTER_GROUPS[2].name].join(","),
+      });
+    }
   };
 
   return (
-    <div className="filterWrap">
-      {GROUPS.map((group, index) => {
-        return (
-          <div key={"group-" + group}>
-            <span className="filterTitle">{GROUPNAME[index]}</span>
-            {group.map((value, i) => {
-              return (
-                <CheckBox
-                  key={"value-" + value + i}
-                  value={value}
-                  handleCheckBox={handleCheckBox}
-                  group={GROUPNAME[index]}
-                  initialSelected={() => {
-                    const temp = params.get(GROUPNAME[index]);
-
-                    if (!temp) return false;
-
-                    return params.get(GROUPNAME[index]).includes(value);
-                  }}
-                ></CheckBox>
-              );
-            })}
+    <>
+      <div className="filterWrap" ref={filterRef}>
+        <div
+          onClick={() => {
+            setShowFilter(true);
+            setFilterReset(false);
+          }}
+          className="filterClickable"
+        >
+          <FaFilter className="icon"></FaFilter>
+          <span>filter </span>
+        </div>
+        <div
+          className={
+            "filterGroupWrap " + (showFilter ? "showFilter" : "hideFilter")
+          }
+        >
+          {FILTER_GROUPS.map((group, index) => {
+            return (
+              <div key={"group-" + group.name} className="filterGroup">
+                <span className="filterTitle">{group.name}</span>
+                <div className="filterGroupContent">
+                  {group.value.map((value, i) => {
+                    return (
+                      <CheckBox
+                        key={"value-" + value + i}
+                        value={value}
+                        handleCheckBox={handleCheckBox}
+                        group={group.name}
+                        reset={filterReset}
+                        initialSelected={checkedFilter[group.name]}
+                      ></CheckBox>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+          <div className="buttonsWrap">
+            <button
+              className="apply"
+              onClick={() => {
+                applyFilter(0);
+                setShowFilter(false);
+              }}
+            >
+              Apply
+            </button>
+            <button
+              onClick={() => {
+                applyFilter(1);
+                setShowFilter(false);
+              }}
+              className="reset"
+            >
+              Reset
+            </button>
           </div>
-        );
-      })}
-      <button className="apply" onClick={applyFilter}>
-        Apply Filter
-      </button>
-    </div>
+        </div>
+      </div>
+      {showFilter ? <div className="blackScreen"></div> : null}
+    </>
   );
 };
 
-const CheckBox = ({ value, group, handleCheckBox, initialSelected }) => {
+const CheckBox = ({ value, group, handleCheckBox, initialSelected, reset }) => {
   const [selected, setSelected] = useState(initialSelected);
+
+  useEffect(() => {
+    if (!initialSelected) setSelected(false);
+    else setSelected(initialSelected.includes(value));
+  }, [initialSelected]);
+
+  useEffect(() => {
+    if (reset) setSelected(false);
+  }, [reset]);
 
   return (
     <div className="checkboxWrap">
@@ -130,13 +198,10 @@ const CheckBox = ({ value, group, handleCheckBox, initialSelected }) => {
           setSelected(!selected);
           handleCheckBox(!checked, value, group);
         }}
-        className="checkBox"
+        className={"checkBox " + (selected ? "active" : "")}
       >
-        {selected ? (
-          <AiFillCheckCircle className="icon"></AiFillCheckCircle>
-        ) : null}
+        {value}
       </div>
-      <span className="categoryName">{value}</span>
     </div>
   );
 };
