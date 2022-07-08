@@ -1,0 +1,31 @@
+.sortWrap {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+
+  span {
+    color: var(--grey-01);
+    margin-right: 0.5rem;
+  }
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 10px;
+    font-size: 10px;
+    cursor: pointer;
+    background-color: var(--grey-03);
+
+    &:not(:last-child) {
+      margin-right: 0.8rem;
+    }
+
+    &.active {
+      background-color: var(--purple-01);
+      color: white;
+    }
+  }
+}
