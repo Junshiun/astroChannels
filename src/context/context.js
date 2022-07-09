@@ -35,7 +35,9 @@ export const Context = ({ children }) => {
   });
 
   const [user, dispatchUser] = useReducer(userReducer, {
-    favourites: JSON.parse(localStorage.getItem("astroUser")).favourites || [],
+    favourites: JSON.parse(localStorage.getItem("astroUser"))
+      ? JSON.parse(localStorage.getItem("astroUser")).favourites || []
+      : [],
   });
 
   useEffect(() => {
