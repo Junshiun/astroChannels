@@ -1,0 +1,15 @@
+.favouritesWrap {
+  grid-area: c;
+  color: var(--purple-01);
+  background-color: transparent;
+  border: none;
+  width: fit-content;
+  height: fit-content;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+
+  .unliked {
+    color: var(--grey-02);
+  }
+}
