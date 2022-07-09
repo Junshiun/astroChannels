@@ -4,10 +4,11 @@
   .upper {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
   }
 
   .lower {
-    justify-content: flex-end;
+    display: flex;
+    justify-content: flex-start;
   }
 }

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ChannelBox } from "../components/channels/channelBox";
-import { Header } from "../components/channels/header";
+import { Header } from "../components/header/header";
 import { ChannelState } from "../context/context";
 import { SEARCH_FILTER } from "../context/reducer";
 import { FILTER_GROUPS } from "../components/channels/filter";
@@ -43,35 +43,32 @@ export const Channels = () => {
   }, [loading, params]);
 
   return (
-    <div className="wrapper">
-      <ParamsContext params={params} setParams={setParams}>
-        <Header></Header>
-        <div className="channelsPage">
-          <TopBar></TopBar>
-          <div className="channelsWrap">
-            {filtered
-              ? filtered.map((element, index) => {
-                  return (
-                    <ChannelBox
-                      details={element}
-                      key={"channel-" + element.title + "-" + index}
-                    ></ChannelBox>
-                  );
-                })
-              : null}
-          </div>
-        </div>
-      </ParamsContext>
+    <div className="channelsPage">
+      <TopBar></TopBar>
+      <div className="channelsWrap">
+        {filtered
+          ? filtered.map((element, index) => {
+              return (
+                <ChannelBox
+                  details={element}
+                  key={"channel-" + element.title + "-" + index}
+                ></ChannelBox>
+              );
+            })
+          : null}
+      </div>
     </div>
   );
 };
 
-const ParamsContext = ({ children, params, setParams }) => {
-  return (
-    <Params.Provider value={{ params, setParams }}>{children}</Params.Provider>
-  );
-};
+// const ParamsContext = ({ children, params, setParams, reload }) => {
+//   return (
+//     <Params.Provider value={{ params, setParams, reload }}>
+//       {children}
+//     </Params.Provider>
+//   );
+// };
 
-export const ParamsState = () => {
-  return useContext(Params);
-};
+// export const ParamsState = () => {
+//   return useContext(Params);
+// };

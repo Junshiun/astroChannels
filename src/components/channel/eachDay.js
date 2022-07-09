@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const DAY = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
@@ -9,11 +9,15 @@ export const EachDay = ({
   setSelected,
   active,
   setActive,
+  setLength,
+  setOffset,
 }) => {
   const day = DAY[new Date(date).getDay()];
   const current = new Date();
 
   const [filtered, setFiltered] = useState(null);
+
+  const dayLength = useRef(null);
 
   useEffect(() => {
     let next, nextIndex, filteredProgramme;
@@ -52,6 +56,11 @@ export const EachDay = ({
     }
 
     setFiltered(filteredProgramme);
+
+    if (index === 0) {
+      setLength(dayLength.current.clientWidth);
+      setOffset(dayLength.current.offsetLeft);
+    }
   }, []);
 
   return (
@@ -59,10 +68,15 @@ export const EachDay = ({
       onClick={() => {
         setSelected(filtered);
         setActive(index);
+        setLength(dayLength.current.clientWidth);
+        setOffset(dayLength.current.offsetLeft);
+        console.log(dayLength.current.offsetLeft);
       }}
       className={"eachDay " + (index === active ? "active" : "")}
     >
-      {index === 0 ? "TODAY" : day}
+      <div ref={dayLength} style={{ width: "fit-content" }}>
+        {index === 0 ? "TODAY" : day}
+      </div>
     </div>
   );
 };
