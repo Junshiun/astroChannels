@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FaFilter } from "react-icons/fa";
+import { MdCancel } from "react-icons/md";
 import "./filter.scss";
 import { useSearchParams } from "react-router-dom";
 
@@ -170,6 +171,9 @@ export const Filter = () => {
               Reset
             </button>
           </div>
+          <button className="closeFilter" onClick={() => setShowFilter(false)}>
+            <MdCancel></MdCancel>
+          </button>
         </div>
       </div>
       {showFilter ? <div className="blackScreen"></div> : null}

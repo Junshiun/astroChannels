@@ -112,6 +112,19 @@
           background-color: transparent;
         }
       }
+
+      .closeFilter {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        color: var(--black-01);
+        background-color: transparent;
+        border: none;
+        width: fit-content;
+        height: fit-content;
+        cursor: pointer;
+        font-size: 1.2rem;
+      }
     }
   }
 }
