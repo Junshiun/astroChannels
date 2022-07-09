@@ -1,19 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChannelState } from "../../context/context";
-import {
-  ADD_TO_FAVOURITES,
-  REMOVE_FROM_FAVOURITES,
-} from "../../context/reducer";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { FavouriteIcon } from "../favouriteIcon/favouriteIcon";
 import "./channelBox.scss";
 
 const SCHEDULETOTAL = 5;
 const SCHEDULENUMBER = 3;
 
 export const ChannelBox = ({ details }) => {
-  const { id, stbNumber, title, imageUrl, currentSchedule, detailUrl } =
-    details;
+  const { stbNumber, title, imageUrl, currentSchedule, detailUrl } = details;
 
   const [image, setImage] = useState(null);
   const [schedule, setSchedule] = useState(
@@ -22,12 +16,12 @@ export const ChannelBox = ({ details }) => {
 
   const navigate = useNavigate();
 
-  const { user, dispatchUser } = ChannelState();
-  const [liked, setLiked] = useState(null);
+  // const { user, dispatchUser } = ChannelState();
+  // const [liked, setLiked] = useState(null);
 
-  useEffect(() => {
-    setLiked(user.favourites.some((channel) => id === channel.id));
-  }, [user]);
+  // useEffect(() => {
+  //   setLiked(user.favourites.some((channel) => id === channel.id));
+  // }, [user]);
 
   useEffect(() => {
     let array = [];
@@ -55,17 +49,6 @@ export const ChannelBox = ({ details }) => {
     setImage(imageUrl);
   }, [currentSchedule, imageUrl]);
 
-  const handleFavourites = (e) => {
-    e.stopPropagation();
-    if (liked === true) {
-      setLiked(false);
-      dispatchUser({ type: REMOVE_FROM_FAVOURITES, payload: { id: id } });
-    } else if (liked === false) {
-      setLiked(true);
-      dispatchUser({ type: ADD_TO_FAVOURITES, payload: { channel: details } });
-    }
-  };
-
   return (
     <div className="channelBox" onClick={() => navigate(detailUrl)}>
       <div className="channelImg">
@@ -83,15 +66,7 @@ export const ChannelBox = ({ details }) => {
         <span>CH{stbNumber}</span>
         <span>{title}</span>
       </div>
-      <button className="favouritesWrap" onClick={handleFavourites}>
-        {/* <button onClick={handleFavourites}> */}
-        {liked ? (
-          <AiFillHeart className="liked"></AiFillHeart>
-        ) : (
-          <AiOutlineHeart className="unliked"></AiOutlineHeart>
-        )}
-        {/* </button> */}
-      </button>
+      <FavouriteIcon channel={details}></FavouriteIcon>
       {schedule ? (
         <>
           <div className="channelTime">
