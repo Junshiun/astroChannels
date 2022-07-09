@@ -1,0 +1,83 @@
+.header {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(51, 51, 51);
+  padding: 1.5rem 1.5rem;
+  margin-bottom: 1rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+
+  .logoWrap {
+    width: 5rem;
+    margin-right: 1.5rem;
+
+    img {
+      object-fit: contain;
+      width: 100%;
+      cursor: pointer;
+    }
+  }
+
+  .searchWrap {
+    display: flex;
+    max-width: 90vw;
+    height: 2rem;
+    overflow: hidden;
+
+    .iconWrap {
+      height: 100%;
+      width: 2rem;
+      font-size: 1rem;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      background-color: var(--purple-01);
+      border: none;
+      border-radius: 0 1rem 1rem 0;
+    }
+
+    .inputWrap {
+      position: relative;
+      width: 20rem;
+      max-width: calc(100% - 2rem);
+      input {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 0.5rem 2rem 0.5rem 1rem;
+        width: 100%;
+        border-radius: 1rem 0 0 1rem;
+        border: none;
+        outline: none;
+        color: white;
+      }
+
+      .cancel {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        right: 0.8rem;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: fit-content;
+        height: fit-content;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+.wrapper {
+  padding: var(--header-height) 1rem 1rem 1rem;
+}
