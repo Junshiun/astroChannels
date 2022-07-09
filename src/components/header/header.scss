@@ -70,9 +70,19 @@
         padding: 0;
         background-color: transparent;
         border: none;
-        color: white;
+        color: var(--purple-01);
         cursor: pointer;
         font-size: 0.8rem;
+
+        &::before {
+          z-index: -1;
+          position: absolute;
+          content: "";
+          background-color: white;
+          width: 80%;
+          height: 80%;
+          border-radius: 50%;
+        }
       }
     }
   }
