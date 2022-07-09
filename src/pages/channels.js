@@ -8,8 +8,6 @@ import { FILTER_GROUPS } from "../components/channels/filter";
 import "./channels.scss";
 import { TopBar } from "../components/channels/topBar";
 
-const Params = createContext();
-
 export const Channels = () => {
   const {
     channels: { filtered },
@@ -60,15 +58,3 @@ export const Channels = () => {
     </div>
   );
 };
-
-// const ParamsContext = ({ children, params, setParams, reload }) => {
-//   return (
-//     <Params.Provider value={{ params, setParams, reload }}>
-//       {children}
-//     </Params.Provider>
-//   );
-// };
-
-// export const ParamsState = () => {
-//   return useContext(Params);
-// };

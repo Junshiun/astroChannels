@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FavouriteIcon } from "../favouriteIcon/favouriteIcon";
 import "./channelBox.scss";
@@ -15,13 +15,6 @@ export const ChannelBox = ({ details }) => {
   );
 
   const navigate = useNavigate();
-
-  // const { user, dispatchUser } = ChannelState();
-  // const [liked, setLiked] = useState(null);
-
-  // useEffect(() => {
-  //   setLiked(user.favourites.some((channel) => id === channel.id));
-  // }, [user]);
 
   useEffect(() => {
     let array = [];
