@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { ChannelState } from "../../context/context";
-import { ParamsState } from "../../pages/channels";
 import { ONLY_FAVOURITES, REVERT_TO_NORMAL } from "../../context/reducer";
 import "./onlyFavourites.scss";
+import { useSearchParams } from "react-router-dom";
 
 export const OnlyFavourites = () => {
   const { dispatchChannels, user } = ChannelState();
-  const { params } = ParamsState();
+  const [params] = useSearchParams();
 
   const [onlyFavourites, setOnlyFavourites] = useState(false);
 
@@ -25,7 +25,7 @@ export const OnlyFavourites = () => {
   };
 
   return (
-    <div className="favouritesWrap">
+    <div className="onlyFavouritesWrap">
       <div
         onClick={handleOnlyFavourites}
         className={"switchBox " + (onlyFavourites ? "on" : "off")}

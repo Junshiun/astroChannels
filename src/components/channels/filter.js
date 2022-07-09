@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { ParamsState } from "../../pages/channels";
 import { FaFilter } from "react-icons/fa";
 import "./filter.scss";
+import { useSearchParams } from "react-router-dom";
 
 const CATEGORIES = [
   "Variety Entertainment",
@@ -40,7 +40,7 @@ export const Filter = () => {
     [FILTER_GROUPS[2].name]: [],
   });
 
-  const { params, setParams } = ParamsState();
+  const [params, setParams] = useSearchParams();
 
   const [showFilter, setShowFilter] = useState(false);
   const [filterReset, setFilterReset] = useState(0);
@@ -61,7 +61,6 @@ export const Filter = () => {
   }, [params]);
 
   const clickListener = (e) => {
-    console.log(filterRef.current.contains(e.target));
     if (!filterRef.current.contains(e.target) && showFilter) {
       setShowFilter(false);
     }
