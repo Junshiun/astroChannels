@@ -74,13 +74,19 @@ export const channelsReducer = (state, action) => {
           if (payload[FILTER_GROUPS[0].name].length === 0) {
             return true;
           }
-          return payload[FILTER_GROUPS[0].name].includes(channel.category);
+          // return payload[FILTER_GROUPS[0].name].includes(channel.category);
+          return payload[FILTER_GROUPS[0].name].every((category) => {
+            return channel.category.includes(category);
+          });
         })
         .filter((channel) => {
           if (payload[FILTER_GROUPS[1].name].length === 0) {
             return true;
           }
-          return payload[FILTER_GROUPS[1].name].includes(channel.language);
+          // return payload[FILTER_GROUPS[1].name].includes(channel.language);
+          return payload[FILTER_GROUPS[1].name].every((language) => {
+            return channel.language.includes(language);
+          });
         })
         .filter((channel) => {
           if (

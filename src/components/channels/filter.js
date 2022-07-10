@@ -86,8 +86,9 @@ export const Filter = () => {
   }, [showFilter]);
 
   const handleCheckBox = (checked, value, group) => {
-    if (!checked) setCheckedFilter({ ...checkedFilter, [group]: [value] });
-    else setCheckedFilter({ ...checkedFilter, [group]: [] });
+    let set = checked ? [] : [value];
+
+    setCheckedFilter({ ...checkedFilter, [group]: set });
   };
 
   const applyFilter = (reset) => {
@@ -106,9 +107,9 @@ export const Filter = () => {
     } else {
       setParams({
         search: searchParams ? searchParams : "",
-        [FILTER_GROUPS[0].name]: checkedFilter[FILTER_GROUPS[0].name].join(","),
-        [FILTER_GROUPS[1].name]: checkedFilter[FILTER_GROUPS[1].name].join(","),
-        [FILTER_GROUPS[2].name]: checkedFilter[FILTER_GROUPS[2].name].join(","),
+        [FILTER_GROUPS[0].name]: checkedFilter[FILTER_GROUPS[0].name],
+        [FILTER_GROUPS[1].name]: checkedFilter[FILTER_GROUPS[1].name],
+        [FILTER_GROUPS[2].name]: checkedFilter[FILTER_GROUPS[2].name],
       });
     }
   };
