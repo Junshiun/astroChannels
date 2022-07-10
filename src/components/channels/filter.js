@@ -4,7 +4,7 @@ import { MdCancel } from "react-icons/md";
 import "./filter.scss";
 import { useSearchParams } from "react-router-dom";
 
-const CATEGORIES = [
+const CATEGORY = [
   "Variety Entertainment",
   "Special Interest",
   "Movies",
@@ -29,8 +29,8 @@ const LANGUAGE = [
 const RESOLUTION = ["HD", "non-HD"];
 
 export const FILTER_GROUPS = [
-  { name: "categories", value: CATEGORIES },
-  { name: "languages", value: LANGUAGE },
+  { name: "category", value: CATEGORY },
+  { name: "language", value: LANGUAGE },
   { name: "resolution", value: RESOLUTION },
 ];
 
