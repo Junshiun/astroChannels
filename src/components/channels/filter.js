@@ -86,18 +86,8 @@ export const Filter = () => {
   }, [showFilter]);
 
   const handleCheckBox = (checked, value, group) => {
-    let array = checkedFilter;
-
-    if (checked) {
-      array[group].push(value);
-      setCheckedFilter(array);
-    } else {
-      const exist = array[group].indexOf(value);
-      if (exist > -1) {
-        array[group].splice(exist, 1);
-        setCheckedFilter(array);
-      }
-    }
+    if (!checked) setCheckedFilter({ ...checkedFilter, [group]: [value] });
+    else setCheckedFilter({ ...checkedFilter, [group]: [] });
   };
 
   const applyFilter = (reset) => {
@@ -154,7 +144,7 @@ export const Filter = () => {
                         handleCheckBox={handleCheckBox}
                         group={group.name}
                         reset={filterReset}
-                        initialSelected={checkedFilter[group.name]}
+                        checked={checkedFilter}
                       ></CheckBox>
                     );
                   })}
@@ -192,13 +182,13 @@ export const Filter = () => {
   );
 };
 
-const CheckBox = ({ value, group, handleCheckBox, initialSelected, reset }) => {
-  const [selected, setSelected] = useState(initialSelected);
+const CheckBox = ({ value, group, handleCheckBox, checked, reset }) => {
+  const [selected, setSelected] = useState(checked);
 
   useEffect(() => {
-    if (!initialSelected) setSelected(false);
-    else setSelected(initialSelected.includes(value));
-  }, [initialSelected]);
+    if (!checked) setSelected(false);
+    else setSelected(checked[group].includes(value));
+  }, [checked]);
 
   useEffect(() => {
     if (reset) setSelected(false);
@@ -210,7 +200,7 @@ const CheckBox = ({ value, group, handleCheckBox, initialSelected, reset }) => {
         onClick={() => {
           const checked = selected;
           setSelected(!selected);
-          handleCheckBox(!checked, value, group);
+          handleCheckBox(checked, value, group);
         }}
         className={"checkBox " + (selected ? "active" : "")}
       >
