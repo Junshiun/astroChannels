@@ -27,10 +27,14 @@ export const Channels = () => {
       dispatchChannels({
         type: SEARCH_FILTER,
         payload: {
-          search: searchParams,
-          [FILTER_GROUPS[0].name]: categoriesParams,
-          [FILTER_GROUPS[1].name]: languagesParams,
-          [FILTER_GROUPS[2].name]: hdParams,
+          search: searchParams ? searchParams : "",
+          [FILTER_GROUPS[0].name]: categoriesParams
+            ? categoriesParams.split(",")
+            : [],
+          [FILTER_GROUPS[1].name]: languagesParams
+            ? languagesParams.split(",")
+            : [],
+          [FILTER_GROUPS[2].name]: hdParams ? hdParams.split(",") : [],
         },
       });
     }
@@ -44,8 +48,9 @@ export const Channels = () => {
     <div className="channelsPage">
       <TopBar></TopBar>
       <div className="channelsWrap">
-        {filtered
-          ? filtered.map((element, index) => {
+        {filtered ? (
+          filtered.length > 0 ? (
+            filtered.map((element, index) => {
               return (
                 <ChannelBox
                   details={element}
@@ -53,7 +58,10 @@ export const Channels = () => {
                 ></ChannelBox>
               );
             })
-          : null}
+          ) : (
+            <span style={{ marginTop: "1rem" }}>No results found.</span>
+          )
+        ) : null}
       </div>
     </div>
   );

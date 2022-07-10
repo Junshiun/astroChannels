@@ -60,47 +60,40 @@ export const channelsReducer = (state, action) => {
     case SEARCH_FILTER:
       results = initial
         .filter((channel) => {
-          if (
-            payload.search === null ||
-            payload.search === "null" ||
-            payload.search === ""
-          ) {
+          if (payload.search === "") {
             return true;
           }
           return (
-            channel.title.toLowerCase().includes(payload.search) ||
+            channel.title
+              .toLowerCase()
+              .includes(payload.search.toLowerCase()) ||
             channel.stbNumber.includes(payload.search)
           );
         })
         .filter((channel) => {
-          if (
-            payload[FILTER_GROUPS[0].name] === null ||
-            payload[FILTER_GROUPS[0].name] === "null" ||
-            payload[FILTER_GROUPS[0].name] === ""
-          ) {
+          if (payload[FILTER_GROUPS[0].name].length === 0) {
             return true;
           }
           return payload[FILTER_GROUPS[0].name].includes(channel.category);
         })
         .filter((channel) => {
-          if (
-            payload[FILTER_GROUPS[1].name] === null ||
-            payload[FILTER_GROUPS[1].name] === "null" ||
-            payload[FILTER_GROUPS[1].name] === ""
-          ) {
+          if (payload[FILTER_GROUPS[1].name].length === 0) {
             return true;
           }
           return payload[FILTER_GROUPS[1].name].includes(channel.language);
         })
         .filter((channel) => {
           if (
-            payload[FILTER_GROUPS[2].name] === null ||
-            payload[FILTER_GROUPS[2].name] === "null" ||
-            payload[FILTER_GROUPS[2].name] === ""
+            payload[FILTER_GROUPS[2].name].length === 0 ||
+            (payload[FILTER_GROUPS[2].name].includes("HD") &&
+              payload[FILTER_GROUPS[2].name].includes("non-HD"))
           ) {
             return true;
-          }
-          return channel.isHd;
+          } else if (payload[FILTER_GROUPS[2].name].includes("HD"))
+            return channel.isHd;
+          else if (payload[FILTER_GROUPS[2].name].includes("non-HD"))
+            return !channel.isHd;
+          else return false;
         });
       return {
         ...state,

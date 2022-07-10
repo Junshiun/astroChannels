@@ -7,11 +7,12 @@ export const Header = ({ children }) => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
 
-  const [searchInput, setSearchInput] = useState(
-    params.get("search") === null || params.get("search") === "null"
-      ? ""
-      : params.get("search")
-  );
+  const [searchInput, setSearchInput] = useState("");
+
+  useEffect(() => {
+    const initial = params.get("search") ? params.get("search") : "";
+    setSearchInput(initial);
+  }, [params]);
 
   const [cancelVisible, setCancelVisible] = useState(false);
 
@@ -23,7 +24,7 @@ export const Header = ({ children }) => {
   const handleSearch = (e) => {
     e.preventDefault();
 
-    let value = e.target.search.value === "" ? null : e.target.search.value;
+    let value = e.target.search.value;
 
     navigate("/?search=" + value);
   };

@@ -26,7 +26,7 @@ const LANGUAGE = [
   "Korean & Japanese",
 ];
 
-const RESOLUTION = ["HD"];
+const RESOLUTION = ["HD", "non-HD"];
 
 export const FILTER_GROUPS = [
   { name: "categories", value: CATEGORIES },
@@ -45,20 +45,29 @@ export const Filter = () => {
 
   const [showFilter, setShowFilter] = useState(false);
   const [filterReset, setFilterReset] = useState(0);
+  const [appliedFilter, setAppliedFilter] = useState(false);
 
   const filterRef = useRef(null);
   useEffect(() => {
+    const categoriesParams = params.get(FILTER_GROUPS[0].name);
+    const languagesParams = params.get(FILTER_GROUPS[1].name);
+    const resolutionParams = params.get(FILTER_GROUPS[2].name);
+
     setCheckedFilter({
-      [FILTER_GROUPS[0].name]: (params.get(FILTER_GROUPS[0].name) || "").split(
-        ","
-      ),
-      [FILTER_GROUPS[1].name]: (params.get(FILTER_GROUPS[1].name) || "").split(
-        ","
-      ),
-      [FILTER_GROUPS[2].name]: (params.get(FILTER_GROUPS[2].name) || "").split(
-        ","
-      ),
+      [FILTER_GROUPS[0].name]: categoriesParams
+        ? categoriesParams.split(",")
+        : [],
+      [FILTER_GROUPS[1].name]: languagesParams
+        ? languagesParams.split(",")
+        : [],
+      [FILTER_GROUPS[2].name]: resolutionParams
+        ? resolutionParams.split(",")
+        : [],
     });
+
+    setAppliedFilter(
+      !(!categoriesParams && !languagesParams && !resolutionParams)
+    );
   }, [params]);
 
   const clickListener = (e) => {
@@ -92,6 +101,8 @@ export const Filter = () => {
   };
 
   const applyFilter = (reset) => {
+    const searchParams = params.get("search");
+
     if (reset) {
       setFilterReset(true);
       setCheckedFilter({
@@ -100,11 +111,11 @@ export const Filter = () => {
         [FILTER_GROUPS[2].name]: [],
       });
       setParams({
-        search: params.get("search"),
+        search: searchParams ? searchParams : "",
       });
     } else {
       setParams({
-        search: params.get("search"),
+        search: searchParams ? searchParams : "",
         [FILTER_GROUPS[0].name]: checkedFilter[FILTER_GROUPS[0].name].join(","),
         [FILTER_GROUPS[1].name]: checkedFilter[FILTER_GROUPS[1].name].join(","),
         [FILTER_GROUPS[2].name]: checkedFilter[FILTER_GROUPS[2].name].join(","),
@@ -120,7 +131,7 @@ export const Filter = () => {
             setShowFilter(true);
             setFilterReset(false);
           }}
-          className="filterClickable"
+          className={"filterClickable " + (appliedFilter ? "applied" : "")}
         >
           <FaFilter className="icon"></FaFilter>
           <span>filter </span>
