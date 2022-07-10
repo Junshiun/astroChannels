@@ -7,8 +7,8 @@
   .filterClickable {
     z-index: 0;
     border: none;
-    background-color: var(--purple-01);
-    color: white;
+    color: var(--black-01);
+    border: 2px solid var(--black-01);
     padding: 0.3rem 1rem;
     border-radius: 5px;
     font-size: 0.8rem;
@@ -16,6 +16,12 @@
 
     span {
       margin-left: 0.5rem;
+    }
+
+    &.applied {
+      color: white;
+      background-color: var(--purple-01);
+      border: none;
     }
   }
 
@@ -42,7 +48,7 @@
       height: 100vh;
       overflow-y: auto;
       background-color: white;
-      padding: 1rem;
+      padding: 2rem 1rem 1rem 1rem;
 
       .filterIcon {
         display: none;
@@ -123,7 +129,7 @@
         width: fit-content;
         height: fit-content;
         cursor: pointer;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
       }
     }
   }
