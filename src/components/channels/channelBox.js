@@ -17,30 +17,48 @@ export const ChannelBox = ({ details }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let array = [];
+    let array = Array(3).fill({
+      time: "N/A",
+      name: "No Information Available",
+    });
+
+    let current = new Date();
+
+    let firstMeet = 0;
 
     for (let i = 0; i < SCHEDULETOTAL; i++) {
-      if (i >= currentSchedule.length)
-        array[i] = { time: "N/A", name: "No Information Available" };
-      else if (i === 0) {
-        array[i] = {
-          time: "On Now",
-          name: currentSchedule[i].title,
-        };
-      } else {
-        array[i] = {
-          time: new Date(currentSchedule[i].datetime).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-          name: currentSchedule[i].title,
-        };
+      if (i < currentSchedule.length) {
+        if (
+          compareCurrentTime(
+            currentSchedule[i].datetime,
+            currentSchedule[i].duration
+          ) > current
+        ) {
+          if (!firstMeet) {
+            array[0] = {
+              time: "On Now",
+              name: currentSchedule[i].title,
+            };
+          } else {
+            array[firstMeet] = {
+              time: new Date(currentSchedule[i].datetime).toLocaleTimeString(
+                [],
+                {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }
+              ),
+              name: currentSchedule[i].title,
+            };
+          }
+          firstMeet++;
+        }
       }
     }
 
     setSchedule(array);
     setImage(imageUrl);
-  }, [currentSchedule, imageUrl]);
+  }, []);
 
   return (
     <div className="channelBox" onClick={() => navigate(detailUrl)}>
@@ -84,4 +102,17 @@ export const ChannelBox = ({ details }) => {
       ) : null}
     </div>
   );
+};
+
+export const compareCurrentTime = (programmeTime, programmeDuration) => {
+  const startTime = new Date(programmeTime);
+  const durationSplit = programmeDuration.split(":");
+  const duration =
+    +durationSplit[0] * 60 * 60 * 1000 +
+    +durationSplit[1] * 60 * 1000 +
+    +durationSplit[2] * 1000;
+
+  const endTime = new Date(startTime.getTime() + duration);
+
+  return endTime;
 };

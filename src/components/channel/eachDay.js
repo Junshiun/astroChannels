@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { compareCurrentTime } from "../channels/channelBox";
 
 export const DAY = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
@@ -20,25 +21,17 @@ export const EachDay = ({
   const dayLength = useRef(null);
 
   useEffect(() => {
-    let next, nextIndex, filteredProgramme;
+    let filteredProgramme;
 
     if (index === 0) {
-      filteredProgramme = programme.filter((element, index) => {
-        if (new Date(element.datetime) > current) {
-          if (!next) nextIndex = index;
+      filteredProgramme = programme.filter((element) => {
+        if (compareCurrentTime(element.datetime, element.duration) > current) {
           return true;
         }
 
         return false;
       });
-
-      if (filteredProgramme.length === 0)
-        //get last programme before 12am
-        filteredProgramme.unshift(programme[programme.length - 1]);
-      else filteredProgramme.unshift(programme[nextIndex - 1]);
     } else filteredProgramme = programme;
-
-    // if (index === 0) console.log(filteredProgramme);
 
     filteredProgramme = filteredProgramme.map((element, i) => {
       if (index === 0 && i === 0) return { ...element, time: "On Now" };
@@ -70,7 +63,6 @@ export const EachDay = ({
         setActive(index);
         setLength(dayLength.current.clientWidth);
         setOffset(dayLength.current.offsetLeft);
-        console.log(dayLength.current.offsetLeft);
       }}
       className={"eachDay " + (index === active ? "active" : "")}
     >
