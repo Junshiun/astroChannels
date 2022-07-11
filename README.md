@@ -1,4 +1,4 @@
-**Astro Channels**
+##Astro Channels
 
 GitHub repository: <a href="https://github.com/Junshiun/astroChannels" target="_blank">https://github.com/Junshiun/astroChannels</a>
 
@@ -14,7 +14,7 @@ Live website: <a href="https://junshiun.github.io/astroChannels/" target="_blank
 | **Icon**                     | React Icons                         |
 
 <br/>
-**Features**
+###Features
 
 1\. Sorting
 
@@ -51,7 +51,7 @@ Filtering channels by 10 different categories, together with 6 choices of langua
 Ability for users to add or remove channels to favourites. Favourite channels of users are stored using browser local storage to save state and provide information after refreshing.
 <br/>
 
-**View**
+###View
 
 1\. Channel Listing
 
