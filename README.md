@@ -1,8 +1,8 @@
 **Astro Channels**
 
-GitHub repository: [https://github.com/Junshiun/astroChannels](https://github.com/Junshiun/astroChannels)
+GitHub repository: <a href="https://github.com/Junshiun/astroChannels" target="_blank">https://github.com/Junshiun/astroChannels</a>
 
-Live website: [https://junshiun.github.io/astroChannels/](https://junshiun.github.io/astroChannels/)
+Live website: <a href="https://junshiun.github.io/astroChannels/" target="_blank">https://junshiun.github.io/astroChannels/</a>
 
 | **Frameworks and Libraries** | React                               |
 | ---------------------------- | ----------------------------------- |
