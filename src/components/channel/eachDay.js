@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { compareCurrentTime } from "../channels/channelBox";
+import { compareCurrentTime } from "../../context/reducer";
 
 export const DAY = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 

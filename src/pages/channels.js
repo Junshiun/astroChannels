@@ -1,12 +1,12 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ChannelBox } from "../components/channels/channelBox";
-import { Header } from "../components/header/header";
 import { ChannelState } from "../context/context";
 import { SEARCH_FILTER } from "../context/reducer";
 import { FILTER_GROUPS } from "../components/channels/filter";
-import "./channels.scss";
 import { TopBar } from "../components/channels/topBar";
+import { BiLoaderAlt } from "react-icons/bi";
+import "./channels.scss";
 
 export const Channels = () => {
   const {
@@ -14,7 +14,7 @@ export const Channels = () => {
   } = ChannelState();
 
   const { dispatchChannels, loading } = ChannelState();
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const [reload, setReload] = useState(true);
 
   useEffect(() => {
@@ -46,23 +46,31 @@ export const Channels = () => {
 
   return (
     <div className="channelsPage">
-      <TopBar></TopBar>
-      <div className="channelsWrap">
-        {filtered ? (
-          filtered.length > 0 ? (
-            filtered.map((element, index) => {
-              return (
-                <ChannelBox
-                  details={element}
-                  key={"channel-" + element.title + "-" + index}
-                ></ChannelBox>
-              );
-            })
-          ) : (
-            <span style={{ marginTop: "1rem" }}>No results found.</span>
-          )
-        ) : null}
-      </div>
+      {loading ? (
+        <div className="loadingIconWrap">
+          <BiLoaderAlt className="loadingIcon"></BiLoaderAlt>
+        </div>
+      ) : (
+        <>
+          <TopBar></TopBar>
+          <div className="channelsWrap">
+            {filtered ? (
+              filtered.length > 0 ? (
+                filtered.map((element, index) => {
+                  return (
+                    <ChannelBox
+                      details={element}
+                      key={"channel-" + element.title + "-" + index}
+                    ></ChannelBox>
+                  );
+                })
+              ) : (
+                <span style={{ marginTop: "1rem" }}>No results found.</span>
+              )
+            ) : null}
+          </div>
+        </>
+      )}
     </div>
   );
 };

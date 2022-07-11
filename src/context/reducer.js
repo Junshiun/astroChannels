@@ -15,6 +15,8 @@ export const REMOVE_FROM_FAVOURITES = "remove from favourites";
 export const ONLY_FAVOURITES = "only show favourites channels";
 export const REVERT_TO_NORMAL = "when only favourites is not selected";
 
+const SCHEDULETOTAL = 5;
+
 export const channelsReducer = (state, action) => {
   const { initial, filtered, dataTemp, sortType, sortTemp } = state;
 
@@ -24,10 +26,54 @@ export const channelsReducer = (state, action) => {
 
   switch (action.type) {
     case FETCH_DATA:
+      const current = new Date();
+
+      const dataFetched = payload.data.map((channel) => {
+        const { currentSchedule } = channel;
+
+        let array = Array(5).fill({
+          time: "N/A",
+          name: "No Information Available",
+        });
+
+        let firstMeet = 0;
+
+        for (let i = 0; i < SCHEDULETOTAL; i++) {
+          if (i < currentSchedule.length) {
+            if (
+              compareCurrentTime(
+                currentSchedule[i].datetime,
+                currentSchedule[i].duration
+              ) > current
+            ) {
+              if (!firstMeet) {
+                array[0] = {
+                  time: "On Now",
+                  name: currentSchedule[i].title,
+                };
+              } else {
+                array[firstMeet] = {
+                  time: new Date(
+                    currentSchedule[i].datetime
+                  ).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }),
+                  name: currentSchedule[i].title,
+                };
+              }
+              firstMeet++;
+            }
+          }
+        }
+
+        return { ...channel, scheduleArray: array };
+      });
+
       return {
         ...state,
-        initial: payload.data,
-        filtered: payload.data,
+        initial: dataFetched,
+        filtered: dataFetched,
       };
     case SORT_BYNUM_ASCENDING:
       return {
@@ -147,4 +193,17 @@ export const userReducer = (state, action) => {
     default:
       return state;
   }
+};
+
+export const compareCurrentTime = (programmeTime, programmeDuration) => {
+  const startTime = new Date(programmeTime);
+  const durationSplit = programmeDuration.split(":");
+  const duration =
+    +durationSplit[0] * 60 * 60 * 1000 +
+    +durationSplit[1] * 60 * 1000 +
+    +durationSplit[2] * 1000;
+
+  const endTime = new Date(startTime.getTime() + duration);
+
+  return endTime;
 };
