@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/astroChannels/static/css/main.359072c8.css",
+    "main.css": "/astroChannels/static/css/main.e7a40d0a.css",
     "main.js": "/astroChannels/static/js/main.5d6b3984.js",
     "static/js/787.48125e6d.chunk.js": "/astroChannels/static/js/787.48125e6d.chunk.js",
     "index.html": "/astroChannels/index.html",
-    "main.359072c8.css.map": "/astroChannels/static/css/main.359072c8.css.map",
+    "main.e7a40d0a.css.map": "/astroChannels/static/css/main.e7a40d0a.css.map",
     "main.5d6b3984.js.map": "/astroChannels/static/js/main.5d6b3984.js.map",
     "787.48125e6d.chunk.js.map": "/astroChannels/static/js/787.48125e6d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.359072c8.css",
+    "static/css/main.e7a40d0a.css",
     "static/js/main.5d6b3984.js"
   ]
 }
