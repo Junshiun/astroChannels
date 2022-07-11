@@ -20,7 +20,7 @@ export const Context = ({ children }) => {
     fetch("https://contenthub-api.eco.astro.com.my/channel/all.json")
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         dispatchChannels({ type: FETCH_DATA, payload: { data: res.response } });
       })
       .then(() => setLoading(false));

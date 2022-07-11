@@ -24,7 +24,7 @@ export const Channel = () => {
       .then((res) => {
         const response = res.response;
 
-        console.log(res);
+        // console.log(res);
         setDetails(response);
         setImage(response.imageUrl);
         setSchedule(response.schedule);
