@@ -15,35 +15,35 @@ Live website: [https://junshiun.github.io/astroChannels](https://junshiun.github
 
 ### Features
 
-1\. Sorting
+1\. Sorting <br/>
 ![](https://drive.google.com/uc?export=view&id=1yK_B2OJPmGwfI-nUyxxMenSIa74--CZA)
 
 Ability to sort channels in different order. Sort by channel number and name ascending or descending.
 <br/>
 <br/>
 
-2\. Search
+2\. Search <br/>
 ![](https://drive.google.com/uc?export=view&id=1tOc50G5C7jfBcRHcv18lOUBQN_u7Uwfu)
 
 Ability to search channels by using channel name or channel number.
 <br/>
 <br/>
 
-3\. Detail page
+3\. Detail page <br/>
 ![](https://drive.google.com/uc?export=view&id=1msOsCOiDw9lFqQKtumE9LQtxVKpzLWn2)
 
 Detail page is provided with schedule and other metadata information when click on each channels on channel listing page.
 <br/>
 <br/>
 
-4\. Filter
+4\. Filter <br/>
 ![](https://drive.google.com/uc?export=view&id=1a6Wah8IywNO37fPWSmDOJfCnRQ1fZVrs)
 
 Filtering channels by 10 different categories, together with 6 choices of languages and channel resolution on channel listing page.
 <br/>
 <br/>
 
-5\. User Favourites
+5\. User Favourites <br/>
 ![](https://drive.google.com/uc?export=view&id=1LBZF-4tOWuz6cD1aQo7F-sdGRR7zJ9fr)
 
 Ability for users to add or remove channels to favourites. Favourite channels of users are stored using browser local storage to save state and provide information after refreshing.
