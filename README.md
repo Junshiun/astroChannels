@@ -12,7 +12,8 @@ Live website: [https://junshiun.github.io/astroChannels](https://junshiun.github
 | **Languages**                | JavaScript, HTML, SCSS              |
 | **State Management**         | React useContext + useReducer hooks |
 | **Routing**                  | React Router Dom                    |
-| **Icon**                     | React Icons                         |
+| **Date**                  | MomentJS                    |
+| **Icons**                     | React Icons                         |
 <br/>
 
 ### Features
