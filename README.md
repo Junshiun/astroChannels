@@ -10,7 +10,7 @@ Live website: [https://junshiun.github.io/astroChannels](https://junshiun.github
 | ---------------------------- | ----------------------------------- |
 | **Frameworks and Libraries** | React                               |
 | **Languages**                | JavaScript, HTML, SCSS              |
-| **State Management**         | React useContext + useReducer hooks |
+| **Centralized State Store**         | React useContext + useReducer hooks |
 | **Routing**                  | React Router Dom                    |
 | **Date**                  | MomentJS                    |
 | **Icons**                     | React Icons                         |
