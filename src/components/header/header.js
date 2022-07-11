@@ -21,6 +21,8 @@ export const Header = ({ children }) => {
     else setCancelVisible(false);
   }, [searchInput]);
 
+  useEffect(() => {});
+
   const handleSearch = (e) => {
     e.preventDefault();
 
@@ -47,19 +49,20 @@ export const Header = ({ children }) => {
               value={searchInput}
             ></input>
             {cancelVisible ? (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
+              <div
+                onClick={() => {
                   setSearchInput("");
                 }}
                 className="cancel"
               >
                 <MdCancel></MdCancel>
-              </button>
+              </div>
             ) : null}
           </div>
-          <button className="iconWrap" type="submit">
-            <BiSearch className="icon"></BiSearch>
+          <button className="iconButtonWrap" type="submit">
+            <div className="iconWrap">
+              <BiSearch className="icon"></BiSearch>
+            </div>
           </button>
         </form>
       </div>
