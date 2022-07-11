@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { compareCurrentTime } from "../../context/reducer";
+import moment from "moment";
 
 export const DAY = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
@@ -14,7 +15,7 @@ export const EachDay = ({
   setOffset,
 }) => {
   const day = DAY[new Date(date).getDay()];
-  const current = new Date();
+  const current = moment();
 
   const [filtered, setFiltered] = useState(null);
 
@@ -37,10 +38,7 @@ export const EachDay = ({
       if (index === 0 && i === 0) return { ...element, time: "On Now" };
       return {
         ...element,
-        time: new Date(element.datetime).toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
+        time: moment(element.datetime).format("hh:mm a"),
       };
     });
 

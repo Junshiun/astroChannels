@@ -1,4 +1,5 @@
 import { FILTER_GROUPS } from "../components/channels/filter";
+import moment from "moment";
 
 export const FETCH_DATA = "fetch data";
 export const SORT_BYNUM_ASCENDING = "sort by number ascending";
@@ -26,7 +27,9 @@ export const channelsReducer = (state, action) => {
 
   switch (action.type) {
     case FETCH_DATA:
-      const current = new Date();
+      const current = moment();
+
+      // console.log(moment());
 
       const dataFetched = payload.data.map((channel) => {
         const { currentSchedule } = channel;
@@ -53,12 +56,7 @@ export const channelsReducer = (state, action) => {
                 };
               } else {
                 array[firstMeet] = {
-                  time: new Date(
-                    currentSchedule[i].datetime
-                  ).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  }),
+                  time: moment(currentSchedule[i].datetime).format("hh:mm a"),
                   name: currentSchedule[i].title,
                 };
               }
@@ -196,14 +194,18 @@ export const userReducer = (state, action) => {
 };
 
 export const compareCurrentTime = (programmeTime, programmeDuration) => {
-  const startTime = new Date(programmeTime);
+  const startTime = moment(programmeTime);
   const durationSplit = programmeDuration.split(":");
-  const duration =
-    +durationSplit[0] * 60 * 60 * 1000 +
-    +durationSplit[1] * 60 * 1000 +
-    +durationSplit[2] * 1000;
 
-  const endTime = new Date(startTime.getTime() + duration);
+  // const duration =
+  //   +durationSplit[0] * 60 * 60 * 1000 +
+  //   +durationSplit[1] * 60 * 1000 +
+  //   +durationSplit[2] * 1000;
+
+  const endTime = moment(startTime)
+    .add(durationSplit[0], "hours")
+    .add(durationSplit[1], "minutes")
+    .add(durationSplit[2], "seconds");
 
   return endTime;
 };
