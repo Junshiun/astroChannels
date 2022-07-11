@@ -4,6 +4,8 @@ GitHub repository: <a href="https://github.com/Junshiun/astroChannels" target="_
 
 Live website: <a href="https://junshiun.github.io/astroChannels/" target="_blank">https://junshiun.github.io/astroChannels/</a>
 
+<br/>
+
 | **Frameworks and Libraries** | React                               |
 | ---------------------------- | ----------------------------------- |
 | **Languages**                | JavaScript, HTML, SCSS              |
