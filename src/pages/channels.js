@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ChannelBox } from "../components/channels/channelBox";
 import { ChannelState } from "../context/context";
 import { SEARCH_FILTER } from "../context/reducer";
 import { FILTER_GROUPS } from "../components/channels/filter";
 import { TopBar } from "../components/channels/topBar";
-import { BiLoaderAlt } from "react-icons/bi";
+import { BiLoaderAlt, BiArrowToTop } from "react-icons/bi";
 import "./channels.scss";
 
 export const Channels = () => {
@@ -16,6 +16,7 @@ export const Channels = () => {
   const { dispatchChannels, loading } = ChannelState();
   const [params] = useSearchParams();
   const [reload, setReload] = useState(true);
+  const [enableScrollTop, setEnableScrollTop] = useState(false);
 
   useEffect(() => {
     if (!loading) {
@@ -44,6 +45,21 @@ export const Channels = () => {
     if (!loading) setReload(!reload);
   }, [loading, params]);
 
+  useEffect(() => {
+    window.onscroll = () => {
+      if (window.scrollY > 100) setEnableScrollTop(true);
+      else if (enableScrollTop) setEnableScrollTop(false);
+    };
+
+    return () => {
+      window.onscroll = null;
+    };
+  });
+
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="channelsPage">
       {loading ? (
@@ -53,7 +69,12 @@ export const Channels = () => {
       ) : (
         <>
           <TopBar></TopBar>
-          <div className="channelsWrap">
+          <div
+            className="channelsWrap"
+            onScroll={(e) => {
+              console.log(e);
+            }}
+          >
             {filtered ? (
               filtered.length > 0 ? (
                 filtered.map((element, index) => {
@@ -69,6 +90,11 @@ export const Channels = () => {
               )
             ) : null}
           </div>
+          {enableScrollTop ? (
+            <div className="scrollTopWrap" onClick={scrollTop}>
+              <BiArrowToTop></BiArrowToTop>
+            </div>
+          ) : null}
         </>
       )}
     </div>
