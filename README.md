@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+**Astro Channels**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+GitHub repository: [https://github.com/Junshiun/astroChannels](https://github.com/Junshiun/astroChannels)
 
-## Available Scripts
+Live website: [https://junshiun.github.io/astroChannels/](https://junshiun.github.io/astroChannels/)
 
-In the project directory, you can run:
+| **Frameworks and Libraries** | React                               |
+| ---------------------------- | ----------------------------------- |
+| **Languages**                | JavaScript, HTML, SCSS              |
+| **State Management**         | React useContext + useReducer hooks |
+| **Routing**                  | React Router Dom                    |
+| **Icon**                     | React Icons                         |
 
-### `npm start`
+<br/>
+**Features**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1\. Sorting
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<img src="https://drive.google.com/uc?export=view&id=1yK_B2OJPmGwfI-nUyxxMenSIa74--CZA">
 
-### `npm test`
+Ability to sort channels in different order. Sort by channel number and name ascending or descending.
+<br/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2\. Search
 
-### `npm run build`
+<img src="https://drive.google.com/uc?export=view&id=1tOc50G5C7jfBcRHcv18lOUBQN_u7Uwfu">
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Ability to search channels by using channel name or channel number.
+<br/>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3\. Detail page
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<img src="https://drive.google.com/uc?export=view&id=1msOsCOiDw9lFqQKtumE9LQtxVKpzLWn2">
 
-### `npm run eject`
+Detail page is provided with schedule and other metadata information when click on each channels on channel listing page.
+<br/>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4\. Filter
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<img src="https://drive.google.com/uc?export=view&id=1a6Wah8IywNO37fPWSmDOJfCnRQ1fZVrs">
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Filtering channels by 10 different categories, together with 6 choices of languages and channel resolution on channel listing page.
+<br/>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+5\. User Favourites
 
-## Learn More
+<img src="https://drive.google.com/uc?export=view&id=1LBZF-4tOWuz6cD1aQo7F-sdGRR7zJ9fr">
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Ability for users to add or remove channels to favourites. Favourite channels of users are stored using browser local storage to save state and provide information after refreshing.
+<br/>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**View**
 
-### Code Splitting
+1\. Channel Listing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+| **Mobile**                                                                               | **Desktop**                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| <img src="https://drive.google.com/uc?export=view&id=10a-gXWFGc8WE9TpdyjfwuPhJLeVazg1k"> | <img src="https://drive.google.com/uc?export=view&id=1xhifP8UbGqTk6e_zOlqk8MQbedtGzVDp"> |
 
-### Analyzing the Bundle Size
+ <br/>
+ 
+ 2\. Channel Detail
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+| **Mobile**                                                                               | **Desktop**                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| <img src="https://drive.google.com/uc?export=view&id=120hJsZf5UxpbDSsZhX-RRTRqEW9-_qGU"> | <img src="https://drive.google.com/uc?export=view&id=1PprqwhFqKmdMd0K78l1BxOPoMFEm8S80"> |
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ <br/>
