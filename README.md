@@ -3,10 +3,12 @@
 GitHub repository: [https://github.com/Junshiun/astroChannels](https://github.com/Junshiun/astroChannels)
 
 Live website: [https://junshiun.github.io/astroChannels](https://junshiun.github.io/astroChannels/)
+<br/>
+<br/>
 
-
-| **Frameworks and Libraries** | React                               |
+|||
 | ---------------------------- | ----------------------------------- |
+| **Frameworks and Libraries** | React                               |
 | **Languages**                | JavaScript, HTML, SCSS              |
 | **State Management**         | React useContext + useReducer hooks |
 | **Routing**                  | React Router Dom                    |
