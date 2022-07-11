@@ -65,6 +65,7 @@ export const Filter = () => {
         : [],
     });
 
+    setShowFilter(false);
     setAppliedFilter(
       !(!categoriesParams && !languagesParams && !resolutionParams)
     );
