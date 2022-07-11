@@ -12,7 +12,6 @@ Live website: [https://junshiun.github.io/astroChannels](https://junshiun.github
 | **Routing**                  | React Router Dom                    |
 | **Icon**                     | React Icons                         |
 <br/>
-<br/>
 
 ### Features
 
