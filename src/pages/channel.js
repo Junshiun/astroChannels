@@ -33,80 +33,88 @@ export const Channel = () => {
   }, []);
 
   return (
-    <div>
-      <div className="channelPageWrap">
-        {error ? (
-          <div className="errorWrap">
-            <p>Oops, we can't seem to find the page you are looking for.</p>
-            <button onClick={() => navigate("/")}>GO TO HOME</button>
+    <div className="channelPageWrap">
+      {error ? (
+        <div className="errorWrap">
+          <p>Oops, we can't seem to find the page you are looking for.</p>
+          <button onClick={() => navigate("/")}>GO TO HOME</button>
+        </div>
+      ) : details ? (
+        <>
+          <div className="channelMainInfo">
+            <div className="imageWrap">
+              <img
+                src={image}
+                onError={() =>
+                  setImage(
+                    "https://teelindy.com/wp-content/uploads/2019/03/default_image.png"
+                  )
+                }
+                alt={details.title}
+              ></img>
+            </div>
+            <div className="channelName">
+              <span>CH{details.stbNumber}</span>
+              <span>{details.title}</span>
+            </div>
+            <div className="favourites">
+              <FavouriteIcon channel={details}></FavouriteIcon>
+            </div>
           </div>
-        ) : details ? (
-          <>
-            <div className="channelMainInfo">
-              <div className="imageWrap">
-                <img
-                  src={image}
-                  onError={() =>
-                    setImage(
-                      "https://teelindy.com/wp-content/uploads/2019/03/default_image.png"
-                    )
-                  }
-                  alt={details.title}
-                ></img>
-              </div>
-              <div className="channelName">
-                <span>CH{details.stbNumber}</span>
-                <span>{details.title}</span>
-              </div>
-              <div className="favourites">
-                <FavouriteIcon channel={details}></FavouriteIcon>
-              </div>
+          <div className="channelSubInfo">
+            <div className="infoGrid">
+              <span className="infoTitle">Language</span>
+              <span>{details.language}</span>
+              <span className="infoTitle">Category</span>
+              <span>{details.category}</span>
+              <span className="infoTitle">Resolution</span>
+              <span>{details.isHd ? "HD" : "Non-Hd"}</span>
             </div>
             <div className="channelDescription">{details.description}</div>
-            <div className="channelDaysBar">
-              <div
-                className="animateBar"
-                style={{
-                  "--barLength": length + "px",
-                  "--leftCalc": offset + "px",
-                }}
-              ></div>
-              {schedule
-                ? Object.keys(schedule).map((date, index) => {
-                    return (
-                      <EachDay
-                        key={"schedule-" + index}
-                        date={date}
-                        programme={schedule[date]}
-                        index={index}
-                        setSelected={setSelected}
-                        active={active}
-                        setActive={setActive}
-                        setLength={setLength}
-                        setOffset={setOffset}
-                      ></EachDay>
-                    );
-                  })
-                : null}
-            </div>
-            <div className="channelSchedule">
-              {selected
-                ? selected.map((programme, index) => {
-                    return (
-                      <div
-                        key={"programme-" + index}
-                        className={programme.time === "On Now" ? "onNow" : ""}
-                      >
-                        <span>{programme.time}</span>
-                        <span>{programme.title}</span>
-                      </div>
-                    );
-                  })
-                : null}
-            </div>
-          </>
-        ) : null}
-      </div>
+          </div>
+          <div className="channelDaysBar">
+            <div
+              className="animateBar"
+              style={{
+                "--barLength": length + "px",
+                "--leftCalc": offset + "px",
+              }}
+            ></div>
+            {schedule
+              ? Object.keys(schedule).map((date, index) => {
+                  return (
+                    <EachDay
+                      key={"schedule-" + index}
+                      date={date}
+                      programme={schedule[date]}
+                      index={index}
+                      setSelected={setSelected}
+                      active={active}
+                      setActive={setActive}
+                      setLength={setLength}
+                      setOffset={setOffset}
+                    ></EachDay>
+                  );
+                })
+              : null}
+          </div>
+          <div className="channelSchedule">
+            {selected
+              ? selected.map((programme, index) => {
+                  return (
+                    <div
+                      key={"programme-" + index}
+                      className={programme.time === "On Now" ? "onNow" : ""}
+                    >
+                      <span>{programme.time}</span>
+                      <span>{programme.title}</span>
+                    </div>
+                  );
+                })
+              : null}
+          </div>
+        </>
+      ) : null}
     </div>
   );
 };

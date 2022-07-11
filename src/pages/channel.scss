@@ -48,10 +48,25 @@
     }
   }
 
-  .channelDescription {
+  .channelSubInfo {
     margin-bottom: 2rem;
-    line-height: 1.7rem;
-    text-align: justify;
+
+    .infoGrid {
+      display: grid;
+      grid-template-columns: max-content auto;
+      grid-row-gap: 0.5rem;
+      margin-bottom: 1.5rem;
+
+      .infoTitle {
+        margin-right: 1.5rem;
+        font-weight: 600;
+      }
+    }
+
+    .channelDescription {
+      line-height: 1.7rem;
+      text-align: justify;
+    }
   }
 
   .channelDaysBar {
